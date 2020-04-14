@@ -1,0 +1,29 @@
+product_create:
+  path: /product/
+  defaults: { _controller: app.controller.product.create:execute }
+  methods: [POST]
+
+product_delete:
+  path: /product/{id}/
+  defaults: { _controller: app.controller.product.delete:execute }
+  methods: [DELETE]
+
+product_update:
+  path: /product/{id}/
+  defaults: { _controller: app.controller.product.update:execute }
+  methods: [PUT]
+
+product_list:
+  path: /product/
+  defaults: { _controller: app.controller.product.read:execute }
+  methods: [GET]
+
+owner_create:
+  path: /owner/
+  defaults: { _controller: app.controller.owner.create:execute }
+  methods: [POST]
+
+owner_list:
+  path: /owner/
+  defaults: { _controller: app.controller.owner.list:execute }
+  methods: [GET]

@@ -1,0 +1,21 @@
+MyApp\Component\Product\Domain\Entity\Owner:
+  type: entity
+  table: null
+  repositoryClass: MyApp\Component\Product\Infrastructure\Repository\OwnerRepository
+  id:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+  fields:
+    name:
+      type: string
+      length: '100'
+
+  oneToMany:
+    products:
+      targetEntity: Product
+      mappedBy: owner
+
+  lifecycleCallbacks: {  }

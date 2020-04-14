@@ -1,0 +1,84 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/service_container.html
+parameters:
+#    parameter_name: value
+services:
+
+  # owner services
+  # =================
+  app.repository.owner:
+    class: MyApp\Component\Product\Infrastructure\Repository\OwnerRepository
+    arguments:
+      $entityManager: '@doctrine.orm.entity_manager'
+
+  app.usecase.owner.new:
+    class: MyApp\Component\Product\Application\Usecase\Owner\CreateOwner
+    public: true
+    arguments:
+      $ownerRepository: '@app.repository.owner'
+  app.usecase.owner.read:
+    class: MyApp\Component\Product\Application\Usecase\Owner\ReadOwner
+    public: true
+    arguments:
+      $ownerRepository: '@app.repository.owner'
+
+  app.controller.owner.list:
+    class: MyApp\Component\Product\Infrastructure\http\Controller\Owner\ListOwnersController
+    public: true
+    arguments:
+      $readOwnerCase: '@app.usecase.owner.read'
+  app.controller.owner.create:
+    class: MyApp\Component\Product\Infrastructure\http\Controller\Owner\CreateOwnerController
+    public: true
+    arguments:
+      $createOwnerCase: '@app.usecase.owner.new'
+
+  # product services
+  # =================
+  app.repository.product:
+    class: MyApp\Component\Product\Infrastructure\Repository\ProductRepository
+    arguments:
+      $entityManager: '@doctrine.orm.entity_manager'
+
+  app.usecase.product.new:
+    class: MyApp\Component\Product\Application\Usecase\Product\CreateProduct
+    public: true
+    arguments:
+      $productRepository: '@app.repository.product'
+      $ownerRepository: '@app.repository.owner'
+  app.usecase.product.read:
+    class: MyApp\Component\Product\Application\Usecase\Product\ReadProduct
+    public: true
+    arguments:
+      $productRepository: '@app.repository.product'
+  app.usecase.product.update:
+    class: MyApp\Component\Product\Application\Usecase\Product\UpdateProduct
+    public: true
+    arguments:
+      $productRepository: '@app.repository.product'
+  app.usecase.product.delete:
+    class: MyApp\Component\Product\Application\Usecase\Product\DeleteProduct
+    public: true
+    arguments:
+      $productRepository: '@app.repository.product'
+
+  app.controller.product.create:
+    class: MyApp\Component\Product\Infrastructure\http\Controller\Product\CreateProductController
+    public: true
+    arguments:
+      $createProductCase: '@app.usecase.product.new'
+  app.controller.product.read:
+    class: MyApp\Component\Product\Infrastructure\http\Controller\Product\ListProductsController
+    public: true
+    arguments:
+      $readProductCase: '@app.usecase.product.read'
+  app.controller.product.update:
+    class: MyApp\Component\Product\Infrastructure\http\Controller\Product\UpdateProductController
+    public: true
+    arguments:
+      $updateProductCase: '@app.usecase.product.update'
+  app.controller.product.delete:
+    class: MyApp\Component\Product\Infrastructure\http\Controller\Product\DeleteProductController
+    public: true
+    arguments:
+      $deleteProductCase: '@app.usecase.product.delete'

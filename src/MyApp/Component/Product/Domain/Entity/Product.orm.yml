@@ -1,0 +1,27 @@
+MyApp\Component\Product\Domain\Entity\Product:
+  type: entity
+  table: null
+  repositoryClass: MyApp\Component\Product\Infrastructure\Repository\ProductRepository
+  id:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+  fields:
+    name:
+      type: string
+      length: '100'
+    price:
+      type: decimal
+      precision: 10
+      scale: '2'
+    description:
+      type: text
+
+  manyToOne:
+    owner:
+      targetEntity: Owner
+      inversedBy: products
+
+  lifecycleCallbacks: {  }
